@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Radio Timer</title>
+    </head>
+    <body>
+        <h3>RMF Classic audio player</h3>
+        Setup automatic turn off after:
+        <form id="timer">
+            <label for="inputHour">Hours:</label>
+            <input
+                type="number"
+                name="hour"
+                id="inputHour"
+                style="width: 35px"
+                value="0"
+            />
+            <label for="inputMinute">Minutes:</label>
+            <input
+                type="number"
+                name="minute"
+                id="inputMinute"
+                style="width: 35px"
+                value="0"
+            />
+            <input type="submit" value="Set" />
+        </form>
+        <br />
+        <br />
+        <audio id="radio" controls autoplay></audio>
+        <!-- timer status -->
+        <div>
+            Time to stop plaing: <span id="hour">00</span>:<span id="minute"
+                >00</span
+            >:<span id="secound">00</span>
+        </div>
+        <!-- script -->
+        <script>
+            let interval;
+            const url = "https://rs202-krk-cyfronet.rmfstream.pl/RMFCLASSIC48";
+            const radio = document.getElementById("radio");
+            radio.src = url;
+            timer.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                clearInterval(interval);
+
+                let hour = document.getElementById("hour");
+                let minute = document.getElementById("minute");
+                let secound = document.getElementById("secound");
+
+                hour.innerText = e.target.inputHour.value;
+                minute.innerText = e.target.inputMinute.value;
+
+                interval = setInterval(function () {
+                    secound.innerText = parseInt(secound.innerText) - 1;
+                    if (
+                        parseInt(secound.innerText) < 0 &&
+                        parseInt(minute.innerText) >= 0
+                    ) {
+                        secound.innerText = 59;
+                        if (parseInt(minute.innerText) > 0) {
+                            minute.innerText = parseInt(minute.innerText) - 1;
+                        } else if (parseInt(hour.innerText) > 0) {
+                            hour.innerText = parseInt(hour.innerText) - 1;
+                            minute.innerText = 59;
+                        }
+                    }
+
+                    if (
+                        parseInt(hour.innerText) === 0 &&
+                        parseInt(minute.innerText) === 0 &&
+                        parseInt(secound.innerText) === 0
+                    ) {
+                        radio.pause();
+                        console.log("audio paused");
+                        clearInterval(interval);
+                    }
+                }, 1000);
+            });
+        </script>
+    </body>
+</html>
