@@ -30,6 +30,19 @@
         </form>
         <br />
         <br />
+        <select id="station">
+            <option value="https://rs202-krk-cyfronet.rmfstream.pl/RMF5">
+                Spokojne przeboje
+            </option>
+            <option
+                selected
+                value="https://rs202-krk-cyfronet.rmfstream.pl/RMFCLASSIC48"
+            >
+                RMF Classic
+            </option>
+        </select>
+        <br />
+        <br />
         <audio id="radio" controls autoplay></audio>
         <!-- timer status -->
         <div>
@@ -42,7 +55,16 @@
             let interval;
             const url = "https://rs202-krk-cyfronet.rmfstream.pl/RMFCLASSIC48";
             const radio = document.getElementById("radio");
+            const station = document.getElementById("station");
             radio.src = url;
+            station.addEventListener("change", (e) => {
+                // console.log(
+                //     e.target.options[e.target.options.selectedIndex].value
+                // );
+                radio.src =
+                    e.target.options[e.target.options.selectedIndex].value;
+            });
+
             timer.addEventListener("submit", (e) => {
                 e.preventDefault();
 
