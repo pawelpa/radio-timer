@@ -16,7 +16,7 @@
                 name="hour"
                 id="inputHour"
                 style="width: 35px"
-                value="0"
+                value=""
             />
             <label for="inputMinute">Minutes:</label>
             <input
@@ -24,7 +24,8 @@
                 name="minute"
                 id="inputMinute"
                 style="width: 35px"
-                value="0"
+                value=""
+                required
             />
             <input type="submit" value="Set" />
         </form>
@@ -46,7 +47,8 @@
         <audio id="radio" controls autoplay></audio>
         <!-- timer status -->
         <div>
-            Time to stop playing: <span id="hour">00</span>:<span id="minute"
+            Remaining time to stop playing: <span id="hour">00</span>:<span
+                id="minute"
                 >00</span
             >:<span id="secound">00</span>
         </div>
@@ -57,12 +59,22 @@
             const radio = document.getElementById("radio");
             const station = document.getElementById("station");
             radio.src = url;
+
+            function setText(element, value) {
+                if (parseInt(value) <= 9) {
+                    element.innerText = "0" + value;
+                } else {
+                    element.innerText = value;
+                }
+            }
+            function getElInt(element) {
+                return parseInt(element.innerText);
+            }
             station.addEventListener("change", (e) => {
-                // console.log(
-                //     e.target.options[e.target.options.selectedIndex].value
-                // );
+                //set radio element src attribute to selected url
                 radio.src =
                     e.target.options[e.target.options.selectedIndex].value;
+                radio.play();
             });
 
             timer.addEventListener("submit", (e) => {
@@ -74,32 +86,36 @@
                 let minute = document.getElementById("minute");
                 let secound = document.getElementById("secound");
 
-                hour.innerText = e.target.inputHour.value;
-                minute.innerText = e.target.inputMinute.value;
+                //setup timer to given time
+                setText(hour, e.target.inputHour.value || 0);
+                setText(minute, e.target.inputMinute.value || 0);
+                setText(secound, 0);
 
+                if (!getElInt(hour) && !getElInt(minute) && !getElInt(secound))
+                    return;
+
+                //run interval every 1 secound
                 interval = setInterval(function () {
-                    secound.innerText = parseInt(secound.innerText) - 1;
-                    if (
-                        parseInt(secound.innerText) < 0 &&
-                        parseInt(minute.innerText) >= 0
+                    setText(secound, getElInt(secound) - 1);
+                    if (getElInt(secound) == 0 && getElInt(minute) > 0) {
+                        setText(secound, 59);
+                        setText(minute, getElInt(minute) - 1);
+                    } else if (
+                        getElInt(secound) == 0 &&
+                        getElInt(minute) == 0 &&
+                        getElInt(hour) > 0
                     ) {
-                        secound.innerText = 59;
-                        if (parseInt(minute.innerText) > 0) {
-                            minute.innerText = parseInt(minute.innerText) - 1;
-                        } else if (parseInt(hour.innerText) > 0) {
-                            hour.innerText = parseInt(hour.innerText) - 1;
-                            minute.innerText = 59;
-                        }
-                    }
-
-                    if (
-                        parseInt(hour.innerText) === 0 &&
-                        parseInt(minute.innerText) === 0 &&
-                        parseInt(secound.innerText) === 0
+                        setText(hour, getElInt(hour) - 1);
+                        setText(minute, 59);
+                        setText(secound, 59);
+                    } else if (
+                        getElInt(hour) === 0 &&
+                        getElInt(minute) === 0 &&
+                        getElInt(secound) === 0
                     ) {
+                        clearInterval(interval);
                         radio.pause();
                         console.log("audio paused");
-                        clearInterval(interval);
                     }
                 }, 1000);
             });
