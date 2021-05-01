@@ -44,7 +44,7 @@
         </select>
         <br />
         <br />
-        <audio id="radio" controls autoplay></audio>
+        <audio id="radio" controls></audio>
         <!-- timer status -->
         <div>
             Remaining time to stop playing: <span id="hour">00</span>:<span
@@ -60,13 +60,15 @@
             const station = document.getElementById("station");
             radio.src = url;
 
+            //set innerText on dom element
             function setText(element, value) {
-                if (parseInt(value) <= 9) {
+                if (+value <= 9) {
                     element.innerText = "0" + value;
                 } else {
                     element.innerText = value;
                 }
             }
+            //get dom elemet innerText as integer value
             function getElInt(element) {
                 return parseInt(element.innerText);
             }
@@ -89,7 +91,7 @@
                 //setup timer to given time
                 setText(hour, e.target.inputHour.value || 0);
                 setText(minute, e.target.inputMinute.value || 0);
-                setText(secound, 0);
+                setText(secound, 5);
 
                 if (!getElInt(hour) && !getElInt(minute) && !getElInt(secound))
                     return;
@@ -97,18 +99,20 @@
                 //run interval every 1 secound
                 interval = setInterval(function () {
                     setText(secound, getElInt(secound) - 1);
-                    if (getElInt(secound) == 0 && getElInt(minute) > 0) {
-                        setText(secound, 59);
+
+                    if (getElInt(secound) === 0 && getElInt(minute) > 0) {
                         setText(minute, getElInt(minute) - 1);
+                        setText(secound, 59);
                     } else if (
-                        getElInt(secound) == 0 &&
-                        getElInt(minute) == 0 &&
+                        getElInt(secound) === 0 &&
+                        getElInt(minute) === 0 &&
                         getElInt(hour) > 0
                     ) {
                         setText(hour, getElInt(hour) - 1);
                         setText(minute, 59);
                         setText(secound, 59);
                     } else if (
+                        /* timer stopped */
                         getElInt(hour) === 0 &&
                         getElInt(minute) === 0 &&
                         getElInt(secound) === 0
