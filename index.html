@@ -55,6 +55,7 @@
         <!-- script -->
         <script>
             let interval;
+            let timerStopped = false;
             const url = "https://rs202-krk-cyfronet.rmfstream.pl/RMFCLASSIC48";
             const radio = document.getElementById("radio");
             const station = document.getElementById("station");
@@ -79,6 +80,41 @@
                 radio.play();
             });
 
+            function sleep(ms) {
+                return new Promise((resolve) => setTimeout(resolve, ms));
+            }
+
+            async function timerUpdate() {
+                if (getElInt(secound) > 0)
+                    setText(secound, getElInt(secound) - 1);
+
+                if (getElInt(secound) == 0) await sleep(1000);
+
+                if (getElInt(secound) === 0 && getElInt(minute) > 0) {
+                    setText(secound, 59);
+                    setText(minute, getElInt(minute) - 1);
+                } else if (
+                    getElInt(secound) === 0 &&
+                    getElInt(minute) === 0 &&
+                    getElInt(hour) > 0
+                ) {
+                    setText(hour, getElInt(hour) - 1);
+                    setText(minute, 59);
+                    setText(secound, 59);
+                } else if (
+                    /* timer stopped */
+                    !timerStopped &&
+                    getElInt(hour) === 0 &&
+                    getElInt(minute) === 0 &&
+                    getElInt(secound) === 0
+                ) {
+                    timerStopped = true;
+                    clearInterval(interval);
+                    radio.pause();
+                    console.log("audio paused");
+                }
+            }
+
             timer.addEventListener("submit", (e) => {
                 e.preventDefault();
 
@@ -97,31 +133,7 @@
                     return;
 
                 //run interval every 1 secound
-                interval = setInterval(function () {
-                    setText(secound, getElInt(secound) - 1);
-
-                    if (getElInt(secound) === 0 && getElInt(minute) > 0) {
-                        setText(minute, getElInt(minute) - 1);
-                        setText(secound, 59);
-                    } else if (
-                        getElInt(secound) === 0 &&
-                        getElInt(minute) === 0 &&
-                        getElInt(hour) > 0
-                    ) {
-                        setText(hour, getElInt(hour) - 1);
-                        setText(minute, 59);
-                        setText(secound, 59);
-                    } else if (
-                        /* timer stopped */
-                        getElInt(hour) === 0 &&
-                        getElInt(minute) === 0 &&
-                        getElInt(secound) === 0
-                    ) {
-                        clearInterval(interval);
-                        radio.pause();
-                        console.log("audio paused");
-                    }
-                }, 1000);
+                interval = setInterval(timerUpdate, 1000);
             });
         </script>
     </body>
