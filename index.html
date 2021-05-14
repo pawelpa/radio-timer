@@ -117,7 +117,7 @@
 
             timer.addEventListener("submit", (e) => {
                 e.preventDefault();
-
+                timerStopped = false;
                 clearInterval(interval);
 
                 let hour = document.getElementById("hour");
