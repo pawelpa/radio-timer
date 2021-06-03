@@ -5,6 +5,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Radio Timer</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+            integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
     </head>
     <body>
         <style>
@@ -22,6 +29,12 @@
             }
             button {
                 height: 35px;
+            }
+            .controls {
+                margin-top: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
         </style>
         <div class="container">
@@ -74,7 +87,22 @@
             </fieldset>
             <br />
             <br />
-            <audio id="radio" controls></audio>
+            <audio id="radio"></audio>
+            <fieldset>
+                <legend>Controls</legend>
+                <div class="controls">
+                    <button id="btncontrol" class="fas fa-play"></button>
+                    <input
+                        type="range"
+                        name="rangecontrol"
+                        id="inrange"
+                        min="0"
+                        max="100"
+                        step="10"
+                        value="50"
+                    />
+                </div>
+            </fieldset>
             <!-- timer status -->
             <div>
                 <p>
@@ -95,6 +123,7 @@
             let hour = document.getElementById("hour");
             let minute = document.getElementById("minute");
             let secound = document.getElementById("secound");
+            let btncontrol = document.getElementById("btncontrol");
             radio.src = url;
 
             //set innerText on dom element
@@ -128,6 +157,20 @@
                 setText(hour, 0);
                 setText(minute, 0);
                 setText(secound, 0);
+            });
+            btncontrol.addEventListener("click", (e) => {
+                if (e.target.classList.contains("fa-play")) {
+                    radio.play();
+                    e.target.classList.toggle("fa-play");
+                    e.target.classList.toggle("fa-pause");
+                } else if (e.target.classList.contains("fa-pause")) {
+                    e.target.classList.toggle("fa-pause");
+                    e.target.classList.toggle("fa-play");
+                    radio.pause();
+                }
+            });
+            inrange.addEventListener("change", (e) => {
+                radio.volume = e.target.value / 100;
             });
 
             function sleep(ms) {
@@ -178,7 +221,7 @@
                 if (!getElInt(hour) && !getElInt(minute) && !getElInt(secound))
                     return;
 
-                //run interval every 1 secound
+                //run timerUpdate function every 1 secound
                 interval = setInterval(timerUpdate, 1000);
             });
         </script>
