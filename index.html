@@ -204,6 +204,8 @@
                     timerStopped = true;
                     clearInterval(interval);
                     radio.pause();
+                    btncontrol.classList.toggle("fa-pause");
+                    btncontrol.classList.toggle("fa-play");
                     console.log("audio paused");
                 }
             }
