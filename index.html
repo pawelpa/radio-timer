@@ -27,6 +27,9 @@
             input[type="submit"] {
                 height: 35px;
             }
+            input[type="range"] {
+                margin-top: 10px;
+            }
             button {
                 height: 35px;
             }
@@ -92,6 +95,7 @@
                 <legend>Controls</legend>
                 <div class="controls">
                     <button id="btncontrol" class="fas fa-play"></button>
+
                     <input
                         type="range"
                         name="rangecontrol"
@@ -148,7 +152,8 @@
                 //set radio element src attribute to selected url
                 radio.src =
                     e.target.options[e.target.options.selectedIndex].value;
-                radio.play();
+                btncontrol.classList.remove("fa-pause");
+                btncontrol.classList.add("fa-play");
             });
             reset.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -163,7 +168,7 @@
                     radio.play();
                     e.target.classList.toggle("fa-play");
                     e.target.classList.toggle("fa-pause");
-                } else if (e.target.classList.contains("fa-pause")) {
+                } else {
                     e.target.classList.toggle("fa-pause");
                     e.target.classList.toggle("fa-play");
                     radio.pause();
