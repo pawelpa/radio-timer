@@ -39,6 +39,49 @@
                 flex-direction: column;
                 align-items: center;
             }
+            .arrow-up {
+                border-left: 12px transparent solid;
+                border-right: 12px transparent solid;
+                border-bottom: 12px green inset;
+                width: 0px;
+                height: 8px;
+                cursor: pointer;
+            }
+            .arrow-down {
+                border-left: 12px transparent solid;
+                border-right: 12px transparent solid;
+                border-top: 12px green inset;
+                width: 0px;
+                height: 8px;
+                cursor: pointer;
+            }
+            .arrow-up:hover {
+                border-bottom: 12px lightgreen inset;
+            }
+            .arrow-down:hover {
+                border-top: 12px lightgreen inset;
+            }
+            .ib {
+                display: flex;
+                flex-direction: row;
+                padding: 2px;
+
+                justify-content: center;
+                align-items: center;
+            }
+            .arrow {
+                display: inline-block;
+                margin-left: 4px;
+            }
+
+            #buttons {
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-around;
+            }
+            .time {
+                display: flex;
+            }
         </style>
         <div class="container">
             <h3>Radio Timer</h3>
@@ -46,28 +89,51 @@
                 <legend>Setup timeout</legend>
 
                 <form id="timer">
-                    <label for="inputHour">Hr:</label>
-                    <input
-                        type="text"
-                        name="hour"
-                        id="inputHour"
-                        style="width: 35px"
-                        value="0"
-                        maxlength="2"
-                    />
-                    <label for="inputMinute">Min:</label>
-                    <input
-                        type="text"
-                        name="minute"
-                        id="inputMinute"
-                        style="width: 35px"
-                        value="0"
-                        maxlength="2"
-                        required
-                    />
-
-                    <input type="submit" value="Start" />
-                    <button id="reset">Reset</button>
+                    <div class="time">
+                        <div class="ib">
+                            <label for="inputHour">Hr:</label>
+                            <input
+                                type="text"
+                                name="hour"
+                                id="inputHour"
+                                style="width: 35px"
+                                value="0"
+                                maxlength="2"
+                            />
+                            <div class="arrow">
+                                <div id="hourArrowUp" class="arrow-up"></div>
+                                <hr />
+                                <div
+                                    id="hourArrowDown"
+                                    class="arrow-down"
+                                ></div>
+                            </div>
+                        </div>
+                        <div class="ib">
+                            <label for="inputMinute">Min:</label>
+                            <input
+                                type="text"
+                                name="minute"
+                                id="inputMinute"
+                                style="width: 35px"
+                                value="0"
+                                maxlength="2"
+                                required
+                            />
+                            <div class="arrow">
+                                <div id="minuteArrowUp" class="arrow-up"></div>
+                                <hr />
+                                <div
+                                    id="minuteArrowDown"
+                                    class="arrow-down"
+                                ></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="buttons">
+                        <input type="submit" value="Start" />
+                        <button id="reset">Reset</button>
+                    </div>
                 </form>
             </fieldset>
             <br />
@@ -124,11 +190,42 @@
             const radio = document.getElementById("radio");
             const station = document.getElementById("station");
             const reset = document.getElementById("reset");
-            let hour = document.getElementById("hour");
-            let minute = document.getElementById("minute");
-            let secound = document.getElementById("secound");
-            let btncontrol = document.getElementById("btncontrol");
+            const hour = document.getElementById("hour");
+            const minute = document.getElementById("minute");
+            const secound = document.getElementById("secound");
+            const btncontrol = document.getElementById("btncontrol");
+            const hourArrowUp = document.getElementById("hourArrowUp");
+            const hourArrowDown = document.getElementById("hourArrowDown");
+            const minuteArrowUp = document.getElementById("minuteArrowUp");
+            const minuteArrowDown = document.getElementById("minuteArrowDown");
+            const inputMinute = document.getElementById("inputMinute");
+            const inputHour = document.getElementById("inputHour");
             radio.src = url;
+
+            function arrowHandler(e) {
+                switch (e.target) {
+                    case minuteArrowUp: {
+                        inputMinute.value = parseInt(inputMinute.value) + 1;
+                        break;
+                    }
+                    case minuteArrowDown: {
+                        if (parseInt(inputMinute.value) == 0) return;
+                        inputMinute.value = parseInt(inputMinute.value) - 1;
+                        break;
+                    }
+                    case hourArrowUp: {
+                        inputHour.value = parseInt(inputHour.value) + 1;
+                        break;
+                    }
+                    case hourArrowDown: {
+                        if (parseInt(inputHour.value) == 0) return;
+                        inputHour.value = parseInt(inputHour.value) - 1;
+                        break;
+                    }
+                }
+            }
+
+            timer.addEventListener("click", arrowHandler);
 
             //set innerText on dom element
             function setText(element, value) {
