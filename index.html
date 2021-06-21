@@ -82,6 +82,9 @@
             .time {
                 display: flex;
             }
+            .remaining {
+                font-size: 2rem;
+            }
         </style>
         <div class="container">
             <h3>Radio Timer</h3>
@@ -136,7 +139,19 @@
                     </div>
                 </form>
             </fieldset>
+
             <br />
+            <!-- timer status -->
+
+            <fieldset>
+                <legend>Time left</legend>
+                <b class="remaining">
+                    <span id="hour">00</span>:<span id="minute">00</span>:<span
+                        id="secound"
+                        >00</span
+                    >
+                </b>
+            </fieldset>
             <br />
             <fieldset>
                 <legend>Choice source</legend>
@@ -155,7 +170,7 @@
                 </select>
             </fieldset>
             <br />
-            <br />
+
             <audio id="radio"></audio>
             <fieldset>
                 <legend>Controls</legend>
@@ -173,14 +188,6 @@
                     />
                 </div>
             </fieldset>
-            <!-- timer status -->
-            <div>
-                <p>
-                    Remaining time: <span id="hour">00</span>:<span id="minute"
-                        >00</span
-                    >:<span id="secound">00</span>
-                </p>
-            </div>
         </div>
         <!-- script -->
         <script>
@@ -259,6 +266,8 @@
                 setText(hour, 0);
                 setText(minute, 0);
                 setText(secound, 0);
+                inputHour.value = 0;
+                inputMinute.value = 0;
             });
             btncontrol.addEventListener("click", (e) => {
                 if (e.target.classList.contains("fa-play")) {
