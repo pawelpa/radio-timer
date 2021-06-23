@@ -234,17 +234,22 @@
             //handle arrow-up/arrow-down click events
             timer.addEventListener("click", arrowHandler);
 
-            radio.addEventListener('stalled', (e) => {
-                console.log('stalled');
+            radio.addEventListener("stalled", (e) => {
+                console.log("stalled");
+                const reselectStation = new Event("change");
+                const playRadio = new Event("click");
 
+                if (station.dispatchEvent(reselectStation)) {
+                    btncontrol.dispatchEvent(playRadio);
+                }
             });
-            radio.addEventListener('waiting', e => {
-                console.log('waiting');
+            radio.addEventListener("waiting", (e) => {
+                console.log("waiting");
             });
 
-            radio.addEventListener('suspend', e => {
-                console.log('suspend');
-            })
+            radio.addEventListener("suspend", (e) => {
+                console.log("suspend");
+            });
 
             //set innerText on dom element
             function setText(element, value) {
@@ -298,7 +303,7 @@
                     e.target.classList.toggle("fa-play");
                     radio.pause();
                 }
-                volumeChange = new Event('change');
+                const volumeChange = new Event("change");
                 inrange.dispatchEvent(volumeChange);
             });
 
@@ -306,7 +311,6 @@
             inrange.addEventListener("change", (e) => {
                 radio.volume = e.target.value / 100;
             });
-
 
             //Sleep execution by given milisecounds
             function sleep(ms) {
