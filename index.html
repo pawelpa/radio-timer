@@ -231,8 +231,20 @@
                     }
                 }
             }
-
+            //handle arrow-up/arrow-down click events
             timer.addEventListener("click", arrowHandler);
+
+            radio.addEventListener('stalled', (e) => {
+                console.log('stalled');
+
+            });
+            radio.addEventListener('waiting', e => {
+                console.log('waiting');
+            });
+
+            radio.addEventListener('suspend', e => {
+                console.log('suspend');
+            })
 
             //set innerText on dom element
             function setText(element, value) {
@@ -252,6 +264,8 @@
             function getElInt(element) {
                 return parseInt(element.innerText);
             }
+
+            //Source change event handler
             station.addEventListener("change", (e) => {
                 //set radio element src attribute to selected url
                 radio.src =
@@ -259,6 +273,9 @@
                 btncontrol.classList.remove("fa-pause");
                 btncontrol.classList.add("fa-play");
             });
+
+            //Restetting user given timeout to zero
+            //
             reset.addEventListener("click", (e) => {
                 e.preventDefault();
                 clearInterval(interval);
@@ -269,6 +286,8 @@
                 inputHour.value = 0;
                 inputMinute.value = 0;
             });
+
+            //play/pause click event handler
             btncontrol.addEventListener("click", (e) => {
                 if (e.target.classList.contains("fa-play")) {
                     radio.play();
@@ -279,11 +298,17 @@
                     e.target.classList.toggle("fa-play");
                     radio.pause();
                 }
+                volumeChange = new Event('change');
+                inrange.dispatchEvent(volumeChange);
             });
+
+            //change radio volume
             inrange.addEventListener("change", (e) => {
                 radio.volume = e.target.value / 100;
             });
 
+
+            //Sleep execution by given milisecounds
             function sleep(ms) {
                 return new Promise((resolve) => setTimeout(resolve, ms));
             }
@@ -321,6 +346,7 @@
                 }
             }
 
+            //start timer
             timer.addEventListener("submit", (e) => {
                 e.preventDefault();
                 timerStopped = false;
