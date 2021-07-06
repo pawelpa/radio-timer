@@ -85,6 +85,25 @@
             .remaining {
                 font-size: 2rem;
             }
+            #volume {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 15px;
+                
+            }
+            #volume input {
+                width: 140px;
+            }
+            #playpause {
+                margin-top: 8px;
+            }
+            fieldset {
+                min-width: 200px;
+                display: flex;
+                
+                justify-content: center;
+            }
         </style>
         <div class="container">
             <h3>Radio Timer</h3>
@@ -176,8 +195,11 @@
                 <legend>Controls</legend>
                 <div class="controls">
                     <button id="btncontrol" class="fas fa-play"></button>
-
-                    <input
+                    <span id='playpause'>
+                        Play/Pause
+                    </span>
+                    <div id='volume'>
+                        <input
                         type="range"
                         name="rangecontrol"
                         id="inrange"
@@ -185,7 +207,9 @@
                         max="100"
                         step="10"
                         value="50"
-                    />
+                        />
+                        <span>Volume</span>
+                    </div>
                 </div>
             </fieldset>
         </div>
