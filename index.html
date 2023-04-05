@@ -138,6 +138,8 @@
             }
             #volume input {
                 width: 140px;
+                cursor: pointer;
+                
             }
             #playpause {
                 margin-top: 8px;
@@ -255,7 +257,7 @@
                         id="inrange"
                         min="0"
                         max="100"
-                        step="10"
+                        step="5"
                         value="50"
                         />
                         <span>Volume</span>
@@ -275,38 +277,9 @@
             const minute = document.getElementById("minute");
             const secound = document.getElementById("secound");
             const btncontrol = document.getElementById("btncontrol");
-            const hourArrowUp = document.getElementById("hourArrowUp");
-            const hourArrowDown = document.getElementById("hourArrowDown");
-            const minuteArrowUp = document.getElementById("minuteArrowUp");
-            const minuteArrowDown = document.getElementById("minuteArrowDown");
             const inputMinute = document.getElementById("inputMinute");
             const inputHour = document.getElementById("inputHour");
-            radio.src = url;
-
-            function arrowHandler(e) {
-                switch (e.target) {
-                    case minuteArrowUp: {
-                        inputMinute.value = parseInt(inputMinute.value) + 1;
-                        break;
-                    }
-                    case minuteArrowDown: {
-                        if (parseInt(inputMinute.value) == 0) return;
-                        inputMinute.value = parseInt(inputMinute.value) - 1;
-                        break;
-                    }
-                    case hourArrowUp: {
-                        inputHour.value = parseInt(inputHour.value) + 1;
-                        break;
-                    }
-                    case hourArrowDown: {
-                        if (parseInt(inputHour.value) == 0) return;
-                        inputHour.value = parseInt(inputHour.value) - 1;
-                        break;
-                    }
-                }
-            }
-            //handle arrow-up/arrow-down click events
-            timer.addEventListener("click", arrowHandler);
+            radio.src = url;     
 
             radio.addEventListener("stalled", (e) => {
                 const reselectStation = new Event("change");
@@ -316,13 +289,6 @@
                     btncontrol.dispatchEvent(playRadio);
                 }
             });
-            // radio.addEventListener("waiting", (e) => {
-            //     console.log("waiting");
-            // });
-
-            // radio.addEventListener("suspend", (e) => {
-            //     console.log("suspend");
-            // });
 
             //set innerText on dom element
             function setText(element, value) {
