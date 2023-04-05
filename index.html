@@ -296,7 +296,7 @@
                 if (station.dispatchEvent(reselectStation)) {
                     btncontrol.dispatchEvent(playRadio);
                     const pLog = document.createElement('p')
-                    pLog.textConent = 'stalled: ' + Date.now()
+                    pLog.textContent = 'stalled: ' + Date.now()
                     log.appendChild(pLog)
                     
                 }
