@@ -153,6 +153,10 @@
             legend {
                 font-size: 1.2rem;
             }
+            #log {
+                color: white;
+                font-size: 0.5rem;
+            }
         </style>
         <div class="container">
             <h3>Radio Play Timer</h3>
@@ -264,6 +268,8 @@
                     </div>
                 </div>
             </fieldset>
+            <div id="log">
+            </div>
         </div>
         <!-- script -->
         <script>
@@ -279,6 +285,8 @@
             const btncontrol = document.getElementById("btncontrol");
             const inputMinute = document.getElementById("inputMinute");
             const inputHour = document.getElementById("inputHour");
+            const log = document.getElementById('log')
+
             radio.src = url;     
 
             radio.addEventListener("stalled", (e) => {
@@ -287,6 +295,10 @@
 
                 if (station.dispatchEvent(reselectStation)) {
                     btncontrol.dispatchEvent(playRadio);
+                    const pLog = document.createElement('p')
+                    pLog.textConent = 'stalled: ' + Date.now()
+                    log.appendChild(pLog)
+                    
                 }
             });
 
