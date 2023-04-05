@@ -308,15 +308,14 @@
             //handle arrow-up/arrow-down click events
             timer.addEventListener("click", arrowHandler);
 
-            // radio.addEventListener("stalled", (e) => {
-            //     console.log("stalled");
-            //     const reselectStation = new Event("change");
-            //     const playRadio = new Event("click");
+            radio.addEventListener("stalled", (e) => {
+                const reselectStation = new Event("change");
+                const playRadio = new Event("click");
 
-            //     if (station.dispatchEvent(reselectStation)) {
-            //         btncontrol.dispatchEvent(playRadio);
-            //     }
-            // });
+                if (station.dispatchEvent(reselectStation)) {
+                    btncontrol.dispatchEvent(playRadio);
+                }
+            });
             // radio.addEventListener("waiting", (e) => {
             //     console.log("waiting");
             // });
