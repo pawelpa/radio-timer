@@ -111,16 +111,20 @@
                 margin-top: 15px;
                 
             }
-            input[type=range] {
-                cursor: pointer;
-                border-radius: 5px;
-                margin-top: 2px;
-                width: 140px;
-            }
-            input[type=range]::-webkit-slider-thumb {
+            input[type="range"] {
                 -webkit-appearance: none;
-                border: none;
-                appearance: none;
+                margin-right: 15px;
+                width: 140px;
+                height: 7px;
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }
+
+            input[type="range"]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                height: 20px;
+                width: 20px;
+                border-radius: 50%;
                 background: black;
             }
             input[type=range]::-webkit-slider-runnable-track {
@@ -131,10 +135,14 @@
             }
             input[type=range]::-moz-range-thumb {
                 background-color: black;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
             }
             input[type=range]::-moz-range-track {
                 background: white;
                 border-radius: 15px;
+                height: 20px;
             }
             #playpause {
                 margin-top: 8px;
