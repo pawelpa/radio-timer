@@ -136,11 +136,27 @@
                 margin-top: 15px;
                 
             }
-            #volume input {
-                width: 140px;
+            input[type=range] {
                 cursor: pointer;
-                
+                border-radius: 5px;
             }
+            input[type=range]::-webkit-slider-runnable-track {
+                /* -webkit-appearance: none; */
+                background: white;
+                border-radius: 5px;
+            }
+            input[type=range]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                background: black !important;
+            }
+            input[type=range]::-moz-range-thumb {
+                background-color: black;
+            }
+            input[type=range]::-moz-range-track {
+                background: white;
+                border-radius: 15px;
+            }
+            input[type=range]::-moz-ra
             #playpause {
                 margin-top: 8px;
             }
@@ -293,7 +309,7 @@
                 const reselectStation = new Event("change");
                 const playRadio = new Event("click");
                 const pLog = document.createElement('p')
-                pLog.textContent = 'stalled: ' + Date.now()
+                pLog.textContent = 'stalled: ' + Date()
                 log.appendChild(pLog)
                 if (station.dispatchEvent(reselectStation)) {
                     btncontrol.dispatchEvent(playRadio)   
