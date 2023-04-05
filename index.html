@@ -292,13 +292,11 @@
             radio.addEventListener("stalled", (e) => {
                 const reselectStation = new Event("change");
                 const playRadio = new Event("click");
-
+                const pLog = document.createElement('p')
+                pLog.textContent = 'stalled: ' + Date.now()
+                log.appendChild(pLog)
                 if (station.dispatchEvent(reselectStation)) {
-                    btncontrol.dispatchEvent(playRadio);
-                    const pLog = document.createElement('p')
-                    pLog.textContent = 'stalled: ' + Date.now()
-                    log.appendChild(pLog)
-                    
+                    btncontrol.dispatchEvent(playRadio)   
                 }
             });
 
