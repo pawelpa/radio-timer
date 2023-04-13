@@ -156,10 +156,7 @@
             legend {
                 font-size: 1.2rem;
             }
-            #log p {
-                color: white;
-                font-size: 0.5rem;
-            }
+            
         </style>
         <div class="container">
             <h3>Radio Play Timer</h3>
@@ -179,14 +176,6 @@
                                 max="24"
                                 min="0"
                             />
-                            <!-- <div class="arrow">
-                                <div id="hourArrowUp" class="arrow-up">+</div>
-                                <hr />
-                                <div
-                                    id="hourArrowDown"
-                                    class="arrow-down"
-                                ></div>
-                            </div> -->
                         </div>
                         <div class="ib">
                             <label for="inputMinute">Minutes:&nbsp;</label>
@@ -200,14 +189,6 @@
                                 min="0"
                                 required
                             />
-                            <!-- <div class="arrow">
-                                <div id="minuteArrowUp" class="arrow-up"></div>
-                                <hr />
-                                <div
-                                id="minuteArrowDown"
-                                class="arrow-down"
-                                ></div>
-                            </div> -->
                         </div>
                     </div>
                     <div id="buttons">
@@ -271,8 +252,6 @@
                     </div>
                 </div>
             </fieldset>
-            <div id="log">
-            </div>
         </div>
         <!-- script -->
         <script>
@@ -295,9 +274,6 @@
             radio.addEventListener("stalled", (e) => {
                 const reselectStation = new Event("change");
                 const playRadio = new Event("click");
-                const pLog = document.createElement('p')
-                pLog.textContent = 'stalled: ' + Date()
-                log.appendChild(pLog)
                 if (station.dispatchEvent(reselectStation)) {
                     btncontrol.dispatchEvent(playRadio)   
                 }
